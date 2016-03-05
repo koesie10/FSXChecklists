@@ -21,6 +21,7 @@ import com.koenv.fsxchecklists.model.ModelIndex
 import com.koenv.fsxchecklists.model.item.ChecklistDrawerItem
 import com.koenv.fsxchecklists.model.item.LoadingDrawerItem
 import com.koenv.fsxchecklists.model.item.ModelDrawerItem
+import com.koenv.fsxchecklists.util.SchedulerProvider
 import com.koenv.fsxchecklists.util.validCompositeSubscription
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -28,8 +29,6 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.holder.ImageHolder
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -42,6 +41,8 @@ class MainActivity : BaseActivity() {
     lateinit var gson: Gson
     @Inject
     lateinit var indexRetriever: IndexRetriever
+    @Inject
+    lateinit var schedulerProvider: SchedulerProvider
 
     private val compositeSubscription by validCompositeSubscription()
 
@@ -108,6 +109,7 @@ class MainActivity : BaseActivity() {
                                     compositeSubscription.add(
                                             indexRetriever
                                                     .retrieveHeaderImage(model)
+                                                    .compose(schedulerProvider.applySingleSchedulers())
                                                     .subscribe {
                                                         item.imageHeader = it
                                                         accountHeader.updateProfile(item)
@@ -118,8 +120,7 @@ class MainActivity : BaseActivity() {
                             }
                             profiles
                         }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(schedulerProvider.applySingleSchedulers())
                         .subscribe {
                             accountHeader.addProfiles(*it.toTypedArray())
                             if (it.isNotEmpty()) {
@@ -140,8 +141,7 @@ class MainActivity : BaseActivity() {
                                 ChecklistDrawerItem(checklist, checklist.items.map { item -> CheckableChecklistItem(item) })
                             }
                         }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(schedulerProvider.applySingleSchedulers())
                         .subscribe {
                             drawer.removeAllItems()
                             drawer.addItems(*it.toTypedArray())
