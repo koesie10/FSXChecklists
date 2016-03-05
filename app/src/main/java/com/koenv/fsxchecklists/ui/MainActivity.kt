@@ -1,5 +1,6 @@
 package com.koenv.fsxchecklists.ui
 
+import android.animation.ObjectAnimator
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.DecelerateInterpolator
 import com.google.gson.Gson
 import com.koenv.fsxchecklists.App
 import com.koenv.fsxchecklists.R
@@ -44,6 +46,9 @@ class MainActivity : BaseActivity() {
     private lateinit var drawer: Drawer
     private lateinit var adapter: ChecklistAdapter
 
+    private var selectedItems = 0
+    private var totalItems = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         App.graph.inject(this)
 
@@ -57,6 +62,7 @@ class MainActivity : BaseActivity() {
                 .withOnAccountHeaderListener { view, iProfile, b ->
                     val profile = iProfile as ModelProfileDrawerItem
                     accountHeader.setHeaderBackground(profile.imageHeader)
+                    floatingActionButton.hide()
                     loadChecklists(profile.manufacturer, profile.model)
                     false
                 }
@@ -70,16 +76,28 @@ class MainActivity : BaseActivity() {
                 .withOnDrawerItemClickListener { view, i, iDrawerItem ->
                     if (iDrawerItem is ChecklistDrawerItem) {
                         loadChecklist(iDrawerItem.checklist)
-                        return@withOnDrawerItemClickListener true
                     }
                     false
                 }
                 .build()
 
-        adapter = ChecklistAdapter(this, listOf())
+        adapter = ChecklistAdapter(this, listOf(), {
+            selectedItems += if (it) 1 else -1
+            updateProgressBar()
+
+            if (selectedItems == totalItems && drawer.drawerItems.size != drawer.currentSelectedPosition) {
+                floatingActionButton.show()
+            } else {
+                floatingActionButton.hide()
+            }
+        })
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        floatingActionButton.setOnClickListener {
+            drawer.setSelectionAtPosition(drawer.currentSelectedPosition + 1, true)
+        }
 
         compositeSubscription.add(
                 Single
@@ -105,13 +123,7 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun loadChecklist(checklist: Checklist) {
-        supportActionBar!!.title = checklist.name
-        adapter.items = checklist.items
-        adapter.notifyDataSetChanged()
-    }
-
-    fun loadChecklists(manufacturerIndex: ManufacturerIndex, modelIndex: ModelIndex) {
+    private fun loadChecklists(manufacturerIndex: ManufacturerIndex, modelIndex: ModelIndex) {
         drawer.removeAllItems()
         drawer.addItem(LoadingDrawerItem())
 
@@ -128,6 +140,28 @@ class MainActivity : BaseActivity() {
                             drawer.setSelection(it.first())
                         }
         )
+    }
+
+    private fun loadChecklist(checklist: Checklist) {
+        floatingActionButton.hide()
+        supportActionBar!!.title = checklist.name
+        adapter.items = checklist.items.map { ChecklistAdapter.Item(it) }
+        adapter.notifyDataSetChanged()
+
+        selectedItems = 0
+        totalItems = checklist.items.size
+        progressBar.max = 1000
+        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0)
+        animator.duration = 1000
+        animator.interpolator = DecelerateInterpolator()
+        animator.start()
+    }
+
+    private fun updateProgressBar() {
+        val animator = ObjectAnimator.ofInt(progressBar, "progress", ((selectedItems / totalItems.toFloat()) * 1000).toInt())
+        animator.duration = 300
+        animator.interpolator = DecelerateInterpolator()
+        animator.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

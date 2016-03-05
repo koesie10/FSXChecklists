@@ -12,19 +12,27 @@ import com.koenv.fsxchecklists.R
 import com.koenv.fsxchecklists.bindView
 import com.koenv.fsxchecklists.model.ChecklistItem
 
-class ChecklistAdapter(val context: Context, var items: List<ChecklistItem>) : RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
+class ChecklistAdapter(val context: Context, var items: List<Item>, var itemCheckedChangedListener: (Boolean) -> Unit) : RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.nameTextView.text = item.name
-        holder.valueTextView.text = item.value
+        holder.nameTextView.text = item.item.name
+        holder.valueTextView.text = item.item.value
+
+        updateChecked(holder, item.isChecked)
 
         holder.itemView.setOnClickListener {
-            val isChecked = !holder.checkBox.isChecked
-            holder.checkBox.isChecked = isChecked
-            holder.nameTextView.setTextColor(ContextCompat.getColor(context, if (isChecked) R.color.colorTextChecked else R.color.colorTextPrimary))
-            holder.valueTextView.setTextColor(ContextCompat.getColor(context, if (isChecked) R.color.colorTextCheckedAccent else R.color.colorTextPrimary))
+            item.isChecked = !item.isChecked
+            updateChecked(holder, item.isChecked)
+
+            itemCheckedChangedListener(item.isChecked)
         }
+    }
+
+    fun updateChecked(holder: ViewHolder, isChecked: Boolean) {
+        holder.checkBox.isChecked = isChecked
+        holder.nameTextView.setTextColor(ContextCompat.getColor(context, if (isChecked) R.color.colorTextChecked else R.color.colorTextPrimary))
+        holder.valueTextView.setTextColor(ContextCompat.getColor(context, if (isChecked) R.color.colorTextCheckedAccent else R.color.colorTextPrimary))
     }
 
     override fun getItemCount() = items.size
@@ -36,4 +44,6 @@ class ChecklistAdapter(val context: Context, var items: List<ChecklistItem>) : R
         val nameTextView by bindView<TextView>(R.id.nameTextView)
         val valueTextView by bindView<TextView>(R.id.valueTextView)
     }
+
+    class Item(val item: ChecklistItem, var isChecked: Boolean = false)
 }

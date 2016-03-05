@@ -81,6 +81,43 @@
           "value": "POSITION"
         }
       ]
+    },
+    {
+      "name": "Cockpit Preparation",
+      "items": [
+        {
+          "name": "Yaw Damper",
+          "value": "ON"
+        },
+        {
+          "name": "Fuel Pumps",
+          "value": "OFF/AS NEEDED"
+        },
+        {
+          "name": "Ground Power Switch",
+          "value": "OFF"
+        },
+        {
+          "name": "Engine Generator Switch (1 & 2)",
+          "value": "OFF"
+        },
+        {
+          "name": "APU Generator Switches (1 & 2)",
+          "value": "ON"
+        },
+        {
+          "name": "Window Heat",
+          "value": "ON"
+        },
+        {
+          "name": "Probe Heat (L & R)",
+          "value": "OFF"
+        },
+        {
+          "name": "Wing/Engine Anti-Ice",
+          "value": "OFF"
+        }
+      ]
     }
   ]
 }
