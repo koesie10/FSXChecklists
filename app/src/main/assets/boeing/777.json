@@ -1,16 +1,16 @@
 {
-  "name": "Boeing 777 (In Progress)",
+  "name": "Boeing 777",
   "checklists": [
     {
       "name": "Pre-Flight",
       "items": [
         {
           "name": "Block Fuel",
-          "value": "LOAD & VERIFY"
+          "value": "LOAD AND VERIFY"
         },
         {
           "name": "Payload",
-          "value": "LOAD & VERIFY"
+          "value": "LOAD AND VERIFY"
         },
         {
           "name": "Parking Brake",
@@ -18,34 +18,50 @@
         },
         {
           "name": "Battery Switch",
-          "value": "ON, GUARD CLOSED"
-        },
-        {
-          "name": "Standby Power Selector",
-          "value": "GUARD CLOSED"
-        },
-        {
-          "name": "APU Bleed Switch",
-          "value": "OFF"
-        },
-        {
-          "name": "L FWD Fuel Pump",
           "value": "ON"
         },
         {
-          "name": "APU Generator Switch",
-          "value": "START"
+          "name": "Prim. Flight Comps",
+          "value": "AUTO, GUARD CLOSED"
         },
         {
-          "name": "APU Generator Switches (1 & 2)",
+          "name": "Thrust Assym Comp",
+          "value": "AUTO"
+        },
+        {
+          "name": "APU GEN Switch",
           "value": "ON"
         },
         {
-          "name": "Position Light",
-          "value": "ON, STEADY"
+          "name": "IFE/PASS SEATS",
+          "value": "ON"
         },
         {
-          "name": "Logo Lights",
+          "name": "CABIN/UTILITY",
+          "value": "ON"
+        },
+        {
+          "name": "L & R BUS TIE Switches",
+          "value": "AUTO"
+        },
+        {
+          "name": "L & R Gen Control Switches",
+          "value": "ON"
+        },
+        {
+          "name": "Backup Gen Switches",
+          "value": "ON"
+        },
+        {
+          "name": "APU Selector Switch",
+          "value": "START, ON"
+        },
+        {
+          "name": "NAV Light",
+          "value": "ON"
+        },
+        {
+          "name": "Logo Light",
           "value": "AS NEEDED"
         },
         {
@@ -57,65 +73,16 @@
           "value": "ARMED, GUARD CLOSED"
         },
         {
-          "name": "Passenger Signs",
+          "name": "L & R Pack Control Switches",
+          "value": "AUTO"
+        },
+        {
+          "name": "ADIRU",
           "value": "ON"
         },
         {
-          "name": "Seat Belt Signs",
-          "value": "OFF"
-        },
-        {
-          "name": "APU Bleed Switch",
-          "value": "ON"
-        },
-        {
-          "name": "Pack Control Switches (L & R)",
-          "value": "AUTO/HIGH"
-        },
-        {
-          "name": "IRS Mode Selectors (1 & 2)",
-          "value": "NAV"
-        },
-        {
-          "name": "FMC Initialization",
+          "name": "FMC Init",
           "value": "POSITION"
-        }
-      ]
-    },
-    {
-      "name": "Cockpit Preparation",
-      "items": [
-        {
-          "name": "Yaw Damper",
-          "value": "ON"
-        },
-        {
-          "name": "Fuel Pumps",
-          "value": "OFF/AS NEEDED"
-        },
-        {
-          "name": "Ground Power Switch",
-          "value": "OFF"
-        },
-        {
-          "name": "Engine Generator Switch (1 & 2)",
-          "value": "OFF"
-        },
-        {
-          "name": "APU Generator Switches (1 & 2)",
-          "value": "ON"
-        },
-        {
-          "name": "Window Heat",
-          "value": "ON"
-        },
-        {
-          "name": "Probe Heat (L & R)",
-          "value": "OFF"
-        },
-        {
-          "name": "Wing/Engine Anti-Ice",
-          "value": "OFF"
         }
       ]
     }
