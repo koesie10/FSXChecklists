@@ -10,9 +10,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import com.koenv.fsxchecklists.R
 import com.koenv.fsxchecklists.bindView
-import com.koenv.fsxchecklists.model.ChecklistItem
+import com.koenv.fsxchecklists.model.CheckableChecklistItem
 
-class ChecklistAdapter(val context: Context, var items: List<Item>, var itemCheckedChangedListener: (Boolean) -> Unit) : RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
+class ChecklistAdapter(val context: Context, var items: List<CheckableChecklistItem>, var itemCheckedChangedListener: (Boolean) -> Unit) : RecyclerView.Adapter<ChecklistAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
@@ -44,6 +44,4 @@ class ChecklistAdapter(val context: Context, var items: List<Item>, var itemChec
         val nameTextView by bindView<TextView>(R.id.nameTextView)
         val valueTextView by bindView<TextView>(R.id.valueTextView)
     }
-
-    class Item(val item: ChecklistItem, var isChecked: Boolean = false)
 }

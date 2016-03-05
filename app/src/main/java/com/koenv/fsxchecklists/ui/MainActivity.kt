@@ -17,7 +17,7 @@ import com.koenv.fsxchecklists.bindView
 import com.koenv.fsxchecklists.model.*
 import com.koenv.fsxchecklists.model.item.ChecklistDrawerItem
 import com.koenv.fsxchecklists.model.item.LoadingDrawerItem
-import com.koenv.fsxchecklists.model.item.ModelProfileDrawerItem
+import com.koenv.fsxchecklists.model.item.ModelDrawerItem
 import com.koenv.fsxchecklists.util.validCompositeSubscription
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -60,10 +60,10 @@ class MainActivity : BaseActivity() {
         accountHeader = AccountHeaderBuilder()
                 .withActivity(this)
                 .withOnAccountHeaderListener { view, iProfile, b ->
-                    val profile = iProfile as ModelProfileDrawerItem
+                    val profile = iProfile as ModelDrawerItem
                     accountHeader.setHeaderBackground(profile.imageHeader)
                     floatingActionButton.hide()
-                    loadChecklists(profile.manufacturer, profile.model)
+                    loadChecklists(profile.model)
                     false
                 }
                 .withProfileImagesVisible(false)
@@ -75,7 +75,7 @@ class MainActivity : BaseActivity() {
                 .withAccountHeader(accountHeader)
                 .withOnDrawerItemClickListener { view, i, iDrawerItem ->
                     if (iDrawerItem is ChecklistDrawerItem) {
-                        loadChecklist(iDrawerItem.checklist)
+                        loadChecklist(iDrawerItem.checklist, iDrawerItem.items)
                     }
                     false
                 }
@@ -84,6 +84,7 @@ class MainActivity : BaseActivity() {
         adapter = ChecklistAdapter(this, listOf(), {
             selectedItems += if (it) 1 else -1
             updateProgressBar()
+            updateBadge()
 
             if (selectedItems == totalItems && drawer.drawerItems.size != drawer.currentSelectedPosition) {
                 floatingActionButton.show()
@@ -99,15 +100,16 @@ class MainActivity : BaseActivity() {
             drawer.setSelectionAtPosition(drawer.currentSelectedPosition + 1, true)
         }
 
+        progressBar.max = 1000
+
         compositeSubscription.add(
                 Single
                         .defer { Single.just(gson.fromJson(InputStreamReader(assets.open("index.json")), Index::class.java)) }
                         .map { index ->
-                            val profiles = arrayListOf<ModelProfileDrawerItem>()
-                            index.forEach { manufacturer ->
-                                manufacturer.models.forEach { model ->
+                            val profiles = index.flatMap { manufacturer ->
+                                manufacturer.models.map { model ->
                                     val image = ImageHolder(BitmapFactory.decodeStream(assets.open(model.headerImage)))
-                                    profiles += ModelProfileDrawerItem(manufacturer, model, image)
+                                    ModelDrawerItem(manufacturer, model, image)
                                 }
                             }
                             profiles
@@ -123,17 +125,27 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun loadChecklists(manufacturerIndex: ManufacturerIndex, modelIndex: ModelIndex) {
+    private fun updateBadge() {
+        val item = drawer.getDrawerItem(drawer.currentSelection)
+        if (item is ChecklistDrawerItem) {
+            item.updateBadge()
+            drawer.updateItem(item)
+        }
+    }
+
+    private fun loadChecklists(modelIndex: ModelIndex) {
         drawer.removeAllItems()
         drawer.addItem(LoadingDrawerItem())
 
         compositeSubscription.add(
                 Single.defer { Single.just(gson.fromJson(InputStreamReader(assets.open(modelIndex.file)), Model::class.java)) }
                         .map {
-                            it.checklists.map {
-                                ChecklistDrawerItem(it)
+                            it.checklists.map { checklist ->
+                                ChecklistDrawerItem(checklist, checklist.items.map { item -> CheckableChecklistItem(item) })
                             }
                         }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe {
                             drawer.removeAllItems()
                             drawer.addItems(*it.toTypedArray())
@@ -142,24 +154,20 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun loadChecklist(checklist: Checklist) {
+    private fun loadChecklist(checklist: Checklist, items: List<CheckableChecklistItem>) {
         floatingActionButton.hide()
         supportActionBar!!.title = checklist.name
-        adapter.items = checklist.items.map { ChecklistAdapter.Item(it) }
+        adapter.items = items
         adapter.notifyDataSetChanged()
 
-        selectedItems = 0
-        totalItems = checklist.items.size
-        progressBar.max = 1000
-        val animator = ObjectAnimator.ofInt(progressBar, "progress", 0)
-        animator.duration = 1000
-        animator.interpolator = DecelerateInterpolator()
-        animator.start()
+        selectedItems = items.count { it.isChecked }
+        totalItems = items.size
+        updateProgressBar(1000)
     }
 
-    private fun updateProgressBar() {
+    private fun updateProgressBar(duration: Long = 300) {
         val animator = ObjectAnimator.ofInt(progressBar, "progress", ((selectedItems / totalItems.toFloat()) * 1000).toInt())
-        animator.duration = 300
+        animator.duration = duration
         animator.interpolator = DecelerateInterpolator()
         animator.start()
     }
@@ -167,6 +175,11 @@ class MainActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeSubscription.unsubscribe()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

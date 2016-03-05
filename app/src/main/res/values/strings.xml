@@ -2,4 +2,7 @@
     <string name="app_name">FSXChecklists</string>
 
     <string name="action_reset">Reset</string>
+
+    <string name="badge_complete">Complete</string>
+    <string name="badge_incomplete">Incomplete</string>
 </resources>

@@ -6,6 +6,11 @@
         "name": "737",
         "headerImage": "boeing/737header.jpg",
         "file": "boeing/737.json"
+      },
+      {
+        "name": "777",
+        "headerImage": "boeing/777header.jpg",
+        "file": "boeing/777.json"
       }
     ]
   }
