@@ -24,8 +24,6 @@ class MainActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
 
-        floatingActionButton.show()
-
         DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
