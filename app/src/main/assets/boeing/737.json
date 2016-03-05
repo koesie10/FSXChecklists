@@ -1,0 +1,86 @@
+{
+  "name": "Boeing 737",
+  "checklists": [
+    {
+      "name": "Pre-Flight",
+      "items": [
+        {
+          "name": "Block Fuel",
+          "value": "LOAD & VERIFY"
+        },
+        {
+          "name": "Payload",
+          "value": "LOAD & VERIFY"
+        },
+        {
+          "name": "Parking Brake",
+          "value": "SET"
+        },
+        {
+          "name": "Battery Switch",
+          "value": "ON, GUARD CLOSED"
+        },
+        {
+          "name": "Standby Power Selector",
+          "value": "GUARD CLOSED"
+        },
+        {
+          "name": "APU Bleed Switch",
+          "value": "OFF"
+        },
+        {
+          "name": "L FWD Fuel Pump",
+          "value": "ON"
+        },
+        {
+          "name": "APU Generator Switch",
+          "value": "START"
+        },
+        {
+          "name": "APU Generator Switches (1 & 2)",
+          "value": "ON"
+        },
+        {
+          "name": "Position Light",
+          "value": "ON, STEADY"
+        },
+        {
+          "name": "Logo Lights",
+          "value": "AS NEEDED"
+        },
+        {
+          "name": "Cockpit Lights",
+          "value": "AS NEEDED"
+        },
+        {
+          "name": "Emer. Exit Lights",
+          "value": "ARMED, GUARD CLOSED"
+        },
+        {
+          "name": "Passenger Signs",
+          "value": "ON"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "OFF"
+        },
+        {
+          "name": "APU Bleed Switch",
+          "value": "ON"
+        },
+        {
+          "name": "Pack Control Switches (L & R)",
+          "value": "AUTO/HIGH"
+        },
+        {
+          "name": "IRS Mode Selectors (1 & 2)",
+          "value": "NAV"
+        },
+        {
+          "name": "FMC Initialization",
+          "value": "POSITION"
+        }
+      ]
+    }
+  ]
+}

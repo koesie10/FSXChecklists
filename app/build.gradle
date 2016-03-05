@@ -56,6 +56,13 @@ dependencies {
 
     compile 'com.jakewharton.timber:timber:4.1.1'
 
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    compile 'io.reactivex:rxjava:1.1.1'
+    compile 'io.reactivex:rxandroid:1.1.0'
+
+    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
+
     compile "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     provided 'org.glassfish:javax.annotation:10.0-b28'
