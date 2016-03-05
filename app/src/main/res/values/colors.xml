@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTextPrimary">#212121</color>
+
+    <color name="colorTextChecked">#B6B6B6</color>
+    <color name="colorTextCheckedAccent">@color/colorAccent</color>
 </resources>

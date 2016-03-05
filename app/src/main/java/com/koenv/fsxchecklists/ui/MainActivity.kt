@@ -3,6 +3,8 @@ package com.koenv.fsxchecklists.ui
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -31,6 +33,7 @@ class MainActivity : BaseActivity() {
     private val toolbar by bindView<Toolbar>(R.id.toolbar)
     private val progressBar by bindView<MaterialProgressBar>(R.id.progressBar)
     private val floatingActionButton by bindView<FloatingActionButton>(R.id.floatingActionButton)
+    private val recyclerView by bindView<RecyclerView>(R.id.recyclerView)
 
     @Inject
     lateinit var gson: Gson
@@ -39,6 +42,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var accountHeader: AccountHeader
     private lateinit var drawer: Drawer
+    private lateinit var adapter: ChecklistAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.graph.inject(this)
@@ -72,6 +76,11 @@ class MainActivity : BaseActivity() {
                 }
                 .build()
 
+        adapter = ChecklistAdapter(this, listOf())
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
         compositeSubscription.add(
                 Single
                         .defer { Single.just(gson.fromJson(InputStreamReader(assets.open("index.json")), Index::class.java)) }
@@ -98,6 +107,8 @@ class MainActivity : BaseActivity() {
 
     private fun loadChecklist(checklist: Checklist) {
         supportActionBar!!.title = checklist.name
+        adapter.items = checklist.items
+        adapter.notifyDataSetChanged()
     }
 
     fun loadChecklists(manufacturerIndex: ManufacturerIndex, modelIndex: ModelIndex) {
