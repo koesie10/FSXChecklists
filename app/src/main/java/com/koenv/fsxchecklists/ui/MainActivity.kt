@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.DecelerateInterpolator
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.gson.Gson
 import com.koenv.fsxchecklists.App
 import com.koenv.fsxchecklists.R
@@ -83,14 +84,7 @@ class MainActivity : BaseActivity() {
 
         adapter = ChecklistAdapter(this, listOf(), {
             selectedItems += if (it) 1 else -1
-            updateProgressBar()
-            updateBadge()
-
-            if (selectedItems == totalItems && drawer.drawerItems.size != drawer.currentSelectedPosition) {
-                floatingActionButton.show()
-            } else {
-                floatingActionButton.hide()
-            }
+            updateChecklist()
         })
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -125,20 +119,13 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun updateBadge() {
-        val item = drawer.getDrawerItem(drawer.currentSelection)
-        if (item is ChecklistDrawerItem) {
-            item.updateBadge()
-            drawer.updateItem(item)
-        }
-    }
-
     private fun loadChecklists(modelIndex: ModelIndex) {
         drawer.removeAllItems()
         drawer.addItem(LoadingDrawerItem())
 
         compositeSubscription.add(
-                Single.defer { Single.just(gson.fromJson(InputStreamReader(assets.open(modelIndex.file)), Model::class.java)) }
+                Single
+                        .defer { Single.just(gson.fromJson(InputStreamReader(assets.open(modelIndex.file)), Model::class.java)) }
                         .map {
                             it.checklists.map { checklist ->
                                 ChecklistDrawerItem(checklist, checklist.items.map { item -> CheckableChecklistItem(item) })
@@ -172,6 +159,25 @@ class MainActivity : BaseActivity() {
         animator.start()
     }
 
+    private fun updateChecklist(progressBarDuration: Long = 300) {
+        updateProgressBar(progressBarDuration)
+        updateBadge()
+
+        if (selectedItems == totalItems && drawer.drawerItems.size != drawer.currentSelectedPosition) {
+            floatingActionButton.show()
+        } else {
+            floatingActionButton.hide()
+        }
+    }
+
+    private fun updateBadge() {
+        val item = drawer.getDrawerItem(drawer.currentSelection)
+        if (item is ChecklistDrawerItem) {
+            item.updateBadge()
+            drawer.updateItem(item)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -184,7 +190,39 @@ class MainActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_reset -> {
-            // TODO: Reset checklist
+            MaterialDialog.Builder(this)
+                    .content(R.string.reset_which)
+                    .positiveText(R.string.reset_this_one)
+                    .onPositive { materialDialog, dialogAction ->
+                        val drawerItem = drawer.getDrawerItem(drawer.currentSelection)
+                        if (drawerItem is ChecklistDrawerItem) {
+                            drawerItem.items.forEach {
+                                it.isChecked = false
+                            }
+                        }
+
+                        selectedItems = 0
+                        adapter.notifyDataSetChanged()
+                        updateChecklist(1000)
+                    }
+                    .negativeText(R.string.reset_all)
+                    .onNegative { materialDialog, dialogAction ->
+                        for (drawerItem in drawer.drawerItems) {
+                            if (drawerItem is ChecklistDrawerItem) {
+                                drawerItem.items.forEach {
+                                    it.isChecked = false
+                                }
+                                drawerItem.updateBadge()
+                                drawer.updateItem(drawerItem)
+                            }
+                        }
+
+                        selectedItems = 0
+                        adapter.notifyDataSetChanged()
+                        updateChecklist(1000)
+                    }
+                    .neutralText(R.string.cancel)
+                    .show()
             true
         }
         else -> super.onOptionsItemSelected(item)

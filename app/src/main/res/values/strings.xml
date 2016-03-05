@@ -3,6 +3,11 @@
 
     <string name="action_reset">Reset</string>
 
+    <string name="reset_which">Which checklists do you want to reset?</string>
+    <string name="reset_this_one">Only this one</string>
+    <string name="reset_all">All</string>
+    <string name="cancel">Cancel</string>
+
     <string name="badge_complete">Complete</string>
     <string name="badge_incomplete">Incomplete</string>
 </resources>
