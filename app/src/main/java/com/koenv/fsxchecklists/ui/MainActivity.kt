@@ -103,7 +103,7 @@ class MainActivity : BaseActivity() {
                 indexRetriever
                         .retrieveIndex()
                         .map { index ->
-                            val profiles = index.flatMap { manufacturer ->
+                            index.flatMap { manufacturer ->
                                 manufacturer.models.map { model ->
                                     val item = ModelDrawerItem(manufacturer, model, ImageHolder(R.drawable.default_header))
                                     compositeSubscription.add(
@@ -118,7 +118,6 @@ class MainActivity : BaseActivity() {
                                     item
                                 }
                             }
-                            profiles
                         }
                         .compose(schedulerProvider.applySingleSchedulers())
                         .subscribe {
