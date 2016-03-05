@@ -1,7 +1,6 @@
 package com.koenv.fsxchecklists.ui
 
 import android.animation.ObjectAnimator
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
@@ -15,7 +14,10 @@ import com.google.gson.Gson
 import com.koenv.fsxchecklists.App
 import com.koenv.fsxchecklists.R
 import com.koenv.fsxchecklists.bindView
-import com.koenv.fsxchecklists.model.*
+import com.koenv.fsxchecklists.data.IndexRetriever
+import com.koenv.fsxchecklists.model.CheckableChecklistItem
+import com.koenv.fsxchecklists.model.Checklist
+import com.koenv.fsxchecklists.model.ModelIndex
 import com.koenv.fsxchecklists.model.item.ChecklistDrawerItem
 import com.koenv.fsxchecklists.model.item.LoadingDrawerItem
 import com.koenv.fsxchecklists.model.item.ModelDrawerItem
@@ -26,10 +28,8 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.holder.ImageHolder
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
-import rx.Single
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.io.InputStreamReader
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -40,6 +40,8 @@ class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var gson: Gson
+    @Inject
+    lateinit var indexRetriever: IndexRetriever
 
     private val compositeSubscription by validCompositeSubscription()
 
@@ -97,13 +99,21 @@ class MainActivity : BaseActivity() {
         progressBar.max = 1000
 
         compositeSubscription.add(
-                Single
-                        .defer { Single.just(gson.fromJson(InputStreamReader(assets.open("index.json")), Index::class.java)) }
+                indexRetriever
+                        .retrieveIndex()
                         .map { index ->
                             val profiles = index.flatMap { manufacturer ->
                                 manufacturer.models.map { model ->
-                                    val image = ImageHolder(BitmapFactory.decodeStream(assets.open(model.headerImage)))
-                                    ModelDrawerItem(manufacturer, model, image)
+                                    val item = ModelDrawerItem(manufacturer, model, ImageHolder(R.drawable.default_header))
+                                    compositeSubscription.add(
+                                            indexRetriever
+                                                    .retrieveHeaderImage(model)
+                                                    .subscribe {
+                                                        item.imageHeader = it
+                                                        accountHeader.updateProfile(item)
+                                                    }
+                                    )
+                                    item
                                 }
                             }
                             profiles
@@ -124,8 +134,7 @@ class MainActivity : BaseActivity() {
         drawer.addItem(LoadingDrawerItem())
 
         compositeSubscription.add(
-                Single
-                        .defer { Single.just(gson.fromJson(InputStreamReader(assets.open(modelIndex.file)), Model::class.java)) }
+                indexRetriever.retrieveModel(modelIndex)
                         .map {
                             it.checklists.map { checklist ->
                                 ChecklistDrawerItem(checklist, checklist.items.map { item -> CheckableChecklistItem(item) })

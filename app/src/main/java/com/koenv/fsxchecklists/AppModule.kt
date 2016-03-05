@@ -1,6 +1,10 @@
 package com.koenv.fsxchecklists
 
+import android.content.Context
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.koenv.fsxchecklists.data.AndroidAssetsIndexRetriever
+import com.koenv.fsxchecklists.data.IndexRetriever
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,5 +17,13 @@ class AppModule(val app: App) {
 
     @Provides
     @Singleton
+    fun provideContext(): Context = app
+
+    @Provides
+    @Singleton
     fun provideGson() = GsonBuilder().create()
+
+    @Provides
+    @Singleton
+    fun provideIndexRetriever(context: Context, gson: Gson): IndexRetriever = AndroidAssetsIndexRetriever(context, gson)
 }
