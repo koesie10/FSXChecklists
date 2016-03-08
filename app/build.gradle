@@ -44,7 +44,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:design:$support_version"
 
-    compile('com.mikepenz:materialdrawer:5.0.9@aar') {
+    compile('com.mikepenz:materialdrawer:5.1.1@aar') {
         transitive = true
     }
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
