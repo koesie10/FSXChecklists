@@ -85,6 +85,316 @@
           "value": "POSITION"
         }
       ]
+    },
+    {
+      "name": "Cockpit Preparation",
+      "items": [
+        {
+          "name": "Window Heat",
+          "value": "ON"
+        },
+        {
+          "name": "Prim L & R Eng Hydr Pump Switches",
+          "value": "ON"
+        },
+        {
+          "name": "Prim C1 & C2 ELEC Hydr Pump Switches",
+          "value": "OFF"
+        },
+        {
+          "name": "L, C1, C2, R Demand Hyd Pump Selectors",
+          "value": "OFF"
+        },
+        {
+          "name": "No Smoking Signs",
+          "value": "AUTO / ON"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "AUTO / ON"
+        },
+        {
+          "name": "EEC Mode Switches",
+          "value": "NORM"
+        },
+        {
+          "name": "Engine Start Selectors",
+          "value": "NORM"
+        },
+        {
+          "name": "Autostart Switch",
+          "value": "ON"
+        },
+        {
+          "name": "L FWD Fuel Pump PRESS Light",
+          "value": "OFF"
+        },
+        {
+          "name": "Wing / Engine Anti-Ice",
+          "value": "AUTO / AS NEEDED"
+        },
+        {
+          "name": "Equip Cooling",
+          "value": "AUTO"
+        },
+        {
+          "name": "Gasper Switch",
+          "value": "ON"
+        },
+        {
+          "name": "RECIRC Fan Switches",
+          "value": "ON"
+        },
+        {
+          "name": "FLT DECK Temp Control Selectors",
+          "value": "AUTO / AS DESIRED"
+        },
+        {
+          "name": "L & R Pack Control Switches",
+          "value": "AUTO"
+        },
+        {
+          "name": "L & R Trim Air Switches",
+          "value": "ON"
+        },
+        {
+          "name": "L, C, R Isolation Valve Switch",
+          "value": "AUTO"
+        },
+        {
+          "name": "ENG & APU Bleed Air Switches",
+          "value": "ON / AUTO"
+        },
+        {
+          "name": "Pressurization Panel",
+          "value": "SET / AUTO"
+        },
+        {
+          "name": "ATIS",
+          "value": "OBTAIN"
+        },
+        {
+          "name": "FMC",
+          "value": "PROGRAM"
+        },
+        {
+          "name": "MCP (Altimeter, A/T, F/D, NAV, IAS, HDG, ALT)",
+          "value": "SET"
+        },
+        {
+          "name": "Flight Instruments",
+          "value": "SET / NO FLAGS"
+        },
+        {
+          "name": "Autobrake",
+          "value": "RTO"
+        },
+        {
+          "name": "Comm. / Audio Panel",
+          "value": "SET"
+        },
+        {
+          "name": "Transponder / TCAS",
+          "value": "TEST / SET"
+        },
+        {
+          "name": "Aileron & Rudder Trim",
+          "value": "SET 0 UNITS"
+        },
+        {
+          "name": "Taxi & Takeoff Briefing",
+          "value": "COMPLETE"
+        }
+      ]
+    },
+    {
+      "name": "Before Start",
+      "items": [
+        {
+          "name": "Cabin & Cargo Doors",
+          "value": "CLOSED / ARMED"
+        },
+        {
+          "name": "External Power / Air",
+          "value": "DISCONNECTED"
+        },
+        {
+          "name": "R ELEC Demand Hydr Pump Selector",
+          "value": "AUTO"
+        },
+        {
+          "name": "Primary C1 & C2 ELEC Hydr Pump Switches",
+          "value": "ON"
+        },
+        {
+          "name": "L ELEC Demand Hydr Pump Selector",
+          "value": "AUTO"
+        },
+        {
+          "name": "C1 & C2 AIR Demand Hydr Pump Selectors",
+          "value": "AUTO"
+        },
+        {
+          "name": "L & R Fuel Pump Switches",
+          "value": "ON"
+        },
+        {
+          "name": "L & R Center Fuel Pump Switches",
+          "value": "AS NEEDED"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "ON"
+        },
+        {
+          "name": "Beacon Light",
+          "value": "ON"
+        },
+        {
+          "name": "Recall Switch",
+          "value": "PUSH"
+        }
+      ]
+    },
+    {
+      "name": "Engine Start",
+      "items": [
+        {
+          "name": "Secondary Display Unit",
+          "value": "ENGINE"
+        },
+        {
+          "name": "Engine Start",
+          "value": "ANNOUNCE"
+        },
+        {
+          "name": "Engine 1 Start Selector",
+          "value": "START"
+        },
+        {
+          "name": "Engine 1 Fuel Control Switch",
+          "value": "RUN"
+        },
+        {
+          "name": "Engine Start",
+          "value": "ANNOUNCE"
+        },
+        {
+          "name": "Engine 2 Start Selector",
+          "value": "START"
+        },
+        {
+          "name": "Engine 2 Fuel Control Switch",
+          "value": "RUN"
+        }
+      ]
+    },
+    {
+      "name": "Before Taxi",
+      "items": [
+        {
+          "name": "L & R Generator Control Switches",
+          "value": "ON, LIGHTS OFF"
+        },
+        {
+          "name": "APU Selector Switch",
+          "value": "OFF"
+        },
+        {
+          "name": "Engine Start Selectors",
+          "value": "NORM"
+        },
+        {
+          "name": "L & R Pack Control Switches",
+          "value": "AUTO, LIGHTS OFF"
+        },
+        {
+          "name": "L, C, R Isolation Valve Switch",
+          "value": "AUTO, LIGHTS OFF"
+        },
+        {
+          "name": "ENG Bleed Air Switches",
+          "value": "ON, LIGHTS OFF"
+        },
+        {
+          "name": "Flaps",
+          "value": "SET __, CONFIRM"
+        },
+        {
+          "name": "Stabilizer Trim",
+          "value": "SET __ UNITS"
+        },
+        {
+          "name": "Flight Controls",
+          "value": "FREE & CORRECT"
+        },
+        {
+          "name": "Recall Switch",
+          "value": "PUSH"
+        },
+        {
+          "name": "Wing / Engine Anti-Ice",
+          "value": "AUTO / AS NEEDED"
+        },
+        {
+          "name": "Taxi Light",
+          "value": "ON"
+        },
+        {
+          "name": "Runway Turnoff Lights",
+          "value": "AS NEEDED"
+        }
+      ]
+    },
+    {
+      "name": "Before Takeoff",
+      "items": [
+        {
+          "name": "Landing Lights",
+          "value": "ON"
+        },
+        {
+          "name": "Strobe Lights",
+          "value": "ON"
+        },
+        {
+          "name": "Traffic Mode",
+          "value": "TFC"
+        },
+        {
+          "name": "Clock",
+          "value": "RUN"
+        },
+        {
+          "name": "Transponder Mode",
+          "value": "TA/RA"
+        }
+      ]
+    },
+    {
+      "name": "After Takeoff",
+      "items": [
+        {
+          "name": "Landing Gear",
+          "value": "OFF"
+        },
+        {
+          "name": "Autobrake",
+          "value": "OFF"
+        },
+        {
+          "name": "Above 10,000 FT",
+          "value": "LDG LTS OFF"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "AS DESIRED"
+        },
+        {
+          "name": "Transition Altitude",
+          "value": "SET STANDARD"
+        }
+      ]
     }
   ]
 }
