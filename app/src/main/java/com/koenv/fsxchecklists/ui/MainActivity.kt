@@ -146,6 +146,7 @@ class MainActivity : BaseActivity() {
         supportActionBar!!.title = checklist.name
         adapter.items = items
         adapter.notifyDataSetChanged()
+        recyclerView.scrollToPosition(0)
 
         selectedItems = items.count { it.isChecked }
         totalItems = items.size
