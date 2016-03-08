@@ -27,7 +27,6 @@ import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
-import com.mikepenz.materialdrawer.holder.ImageHolder
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar
 import javax.inject.Inject
 
@@ -105,17 +104,10 @@ class MainActivity : BaseActivity() {
                         .map { index ->
                             index.flatMap { manufacturer ->
                                 manufacturer.models.map { model ->
-                                    val item = ModelDrawerItem(manufacturer, model, ImageHolder(R.drawable.default_header))
-                                    compositeSubscription.add(
-                                            indexRetriever
-                                                    .retrieveHeaderImage(model)
-                                                    .compose(schedulerProvider.applySingleSchedulers())
-                                                    .subscribe {
-                                                        item.imageHeader = it
-                                                        accountHeader.updateProfile(item)
-                                                    }
-                                    )
-                                    item
+                                    val img = indexRetriever.retrieveHeaderImage(model)
+                                            .toBlocking()
+                                            .value()
+                                    ModelDrawerItem(manufacturer, model, img)
                                 }
                             }
                         }
