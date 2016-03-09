@@ -395,6 +395,187 @@
           "value": "SET STANDARD"
         }
       ]
+    },
+    {
+      "name": "Descent",
+      "items": [
+        {
+          "name": "FMC",
+          "value": "VERIFY ARRIVAL / APPROACH"
+        },
+        {
+          "name": "Flight Instruments (NAV, ALT, Radios)",
+          "value": "SET"
+        },
+        {
+          "name": "Transition Altitude",
+          "value": "SET QNH"
+        },
+        {
+          "name": "Wing / Engine Anti-Ice",
+          "value": "AUTO / AS NEEDED"
+        },
+        {
+          "name": "Recall Switch",
+          "value": "PUSH"
+        },
+        {
+          "name": "Autobrake",
+          "value": "AS REQUIRED"
+        },
+        {
+          "name": "Landing Data",
+          "value": "Vref __, MINIMUMS __"
+        },
+        {
+          "name": "Approach Briefing",
+          "value": "COMPLETE"
+        }
+      ]
+    },
+    {
+      "name": "Before Landing",
+      "items": [
+        {
+          "name": "Below 10,000 FT",
+          "value": "LDG LTS ON"
+        },
+        {
+          "name": "Speed Brakes",
+          "value": "ARM"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "ON"
+        },
+        {
+          "name": "Altimeters",
+          "value": "SET QNH"
+        }
+      ]
+    },
+    {
+      "name": "After Landing",
+      "items": [
+        {
+          "name": "Landing Lights",
+          "value": "OFF"
+        },
+        {
+          "name": "Strobe Lights",
+          "value": "OFF"
+        },
+        {
+          "name": "Taxi Light",
+          "value": "ON"
+        },
+        {
+          "name": "APU Selector Switch",
+          "value": "ON"
+        },
+        {
+          "name": "Wing / Engine Anti-Ice",
+          "value": "AUTO / OFF"
+        },
+        {
+          "name": "Autobrake",
+          "value": "OFF"
+        },
+        {
+          "name": "Speed Brakes",
+          "value": "DOWN"
+        },
+        {
+          "name": "Flaps",
+          "value": "UP"
+        },
+        {
+          "name": "Transponder Mode",
+          "value": "STDBY"
+        }
+      ]
+    },
+    {
+      "name": "Shutdown",
+      "items": [
+        {
+          "name": "Parking Brake",
+          "value": "SET"
+        },
+        {
+          "name": "Taxi Light",
+          "value": "OFF"
+        },
+        {
+          "name": "L & R Engine Fuel Control Switches",
+          "value": "CUTOFF"
+        },
+        {
+          "name": "Seat Belt Signs",
+          "value": "OFF"
+        },
+        {
+          "name": "Beacon Light",
+          "value": "OFF"
+        },
+        {
+          "name": "NAV Light",
+          "value": "ON"
+        },
+        {
+          "name": "C1 & C2 AIR Demand Hydr Pump Selectors",
+          "value": "OFF"
+        },
+        {
+          "name": "L ELEC Demand Hydr Pump Selectors",
+          "value": "OFF"
+        },
+        {
+          "name": "Primary C1 & C2 ELEC Hydr Pump Switches",
+          "value": "OFF"
+        },
+        {
+          "name": "R ELEC Demand Hydr Pump Selector",
+          "value": "OFF"
+        },
+        {
+          "name": "L & R Fuel Pump Switches",
+          "value": "OFF"
+        },
+        {
+          "name": "Flight Director Switches",
+          "value": "OFF"
+        },
+        {
+          "name": "APU Selector Switch",
+          "value": "AS NEEDED"
+        }
+      ]
+    },
+    {
+      "name": "Secure",
+      "items": [
+        {
+          "name": "ADIRU",
+          "value": "OFF"
+        },
+        {
+          "name": "Emer. Exit Lights",
+          "value": "OFF"
+        },
+        {
+          "name": "L & R Pack Control Switches",
+          "value": "OFF"
+        },
+        {
+          "name": "APU Selector Switch",
+          "value": "OFF"
+        },
+        {
+          "name": "Battery Switch",
+          "value": "OFF"
+        }
+      ]
     }
   ]
 }
